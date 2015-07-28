@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">swproject</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="traffic_by_country"></string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_">Activity</string>
+    <string name="title_activity_report">ReportActivity</string>
+    <string name="title_activity_data">DataActivity</string>
+    <string name="title_devices_count_activity">Devices Count</string>
+    <string name="title_traffic_measure_activity">traffic measure by country</string>
+    <string name="title_activity_summery">SummeryActivity</string>
+</resources>
