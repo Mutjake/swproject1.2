@@ -33,4 +33,19 @@
         android:layout_below="@+id/textView4"
         android:layout_alignParentEnd="true" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/txt_databytime"
+        android:layout_below="@+id/btnTraByCou"
+        android:layout_toEndOf="@+id/textView4" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="See detail"
+        android:id="@+id/btn_databytime"
+        android:layout_below="@+id/txt_databytime"
+        android:layout_alignEnd="@+id/btnTraByCou" />
+
 </RelativeLayout>

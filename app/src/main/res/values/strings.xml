@@ -10,4 +10,6 @@
     <string name="title_devices_count_activity">Devices Count</string>
     <string name="title_traffic_measure_activity">traffic measure by country</string>
     <string name="title_activity_summery">SummeryActivity</string>
+    <string name="title_activity_data_by_time">Data in real time</string>
+
 </resources>

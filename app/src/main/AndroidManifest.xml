@@ -40,6 +40,10 @@
             android:name=".SummeryActivity"
             android:label="@string/title_activity_summery" >
         </activity>
+        <activity
+            android:name=".DataByTimeActivity"
+            android:label="@string/title_activity_data_by_time" >
+        </activity>
     </application>
 
 </manifest>

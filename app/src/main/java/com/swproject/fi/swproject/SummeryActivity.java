@@ -21,6 +21,9 @@ public class SummeryActivity extends ActionBarActivity {
     public static ArrayList<String> selectedCountries = new ArrayList<>();
     public static ArrayList<Integer> dummyData = new ArrayList<>();
 
+    public static ArrayList<String> data = new ArrayList<>();
+    public static ArrayList<String> selecteddevices = new ArrayList<>();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +56,7 @@ public class SummeryActivity extends ActionBarActivity {
         TextView newtext = (TextView) findViewById(R.id.textView4);
         Button btnShowDev = (Button) findViewById(R.id.btnDevByTime);
         Button btnShowTra = (Button) findViewById(R.id.btnTraByCou);
-        newtext.append("The biggest data traffic from "+selectedCountries.get(getMaxValue())+" and of "+String.valueOf(dummyData.get(getMaxValue())) + " MB");
+        newtext.append("The biggest data traffic from " + selectedCountries.get(getMaxValue()) + " and of " + String.valueOf(dummyData.get(getMaxValue())) + " MB");
 
         btnShowDev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,6 +66,8 @@ public class SummeryActivity extends ActionBarActivity {
             }
         });
 
+
+
         btnShowTra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +75,18 @@ public class SummeryActivity extends ActionBarActivity {
                 startActivity(activity);
             }
         });
+
+
+     Button Btn_datatime = (Button) findViewById(R.id.btn_databytime);
+        Btn_datatime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getApplicationContext(),DataByTimeActivity.class);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     public ArrayList<String> getCountries(){
