@@ -10,7 +10,9 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
+import com.github.mikephil.charting.data.LineDataSet;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -88,10 +90,36 @@ public class DevicesByTimeChartActivity extends ActionBarActivity
             this.labels.add(tmp.get(10-i-1));
         }
 
-        BarChart chart = new BarChart(this.getApplicationContext());
+        /*BarChart chart = new BarChart(this.getApplicationContext());
+
         setContentView(chart);
 
         BarData data = new BarData(labels, dataset);
         chart.setData(data);
+        */
+        LineChart chart = new LineChart(this.getApplicationContext());
+        setContentView(chart);
+
+        // generating data
+
+        ArrayList<Entry> data = new ArrayList<Entry>();
+        ArrayList<String> xVals = new ArrayList<String>();
+        for (int i=1; i<20; i++)
+        {
+            data.add(new Entry(this.randomDeviceCount(1, 10), i));
+            xVals.add("Col " + String.valueOf(i));
+        }
+
+        LineDataSet lineDataset = new LineDataSet(data, "");
+
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(lineDataset);
+
+        LineData lineData = new LineData(xVals, dataSets);
+        chart.setData(lineData);
+
+
+
     }
 }

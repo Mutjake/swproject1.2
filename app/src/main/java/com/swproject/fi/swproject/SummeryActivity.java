@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.github.mikephil.charting.data.Entry;
+
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Random;
@@ -21,8 +23,14 @@ public class SummeryActivity extends ActionBarActivity {
     public static ArrayList<String> selectedCountries = new ArrayList<>();
     public static ArrayList<Integer> dummyData = new ArrayList<>();
 
+
+    public static ArrayList<Entry> Data_Time = new ArrayList<Entry>();
+    public static ArrayList<String> time_data = new ArrayList<String>();
+
     public static ArrayList<String> data = new ArrayList<>();
     public static ArrayList<String> selecteddevices = new ArrayList<>();
+
+    //public DataByTimeActivity data_by_time = new DataByTimeActivity();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +60,17 @@ public class SummeryActivity extends ActionBarActivity {
 
         selectedCountries = getCountries();
         dummyData = dummyDataTraffic();
+        Data_Time = DataTrafficTime();
 
         TextView newtext = (TextView) findViewById(R.id.textView4);
         Button btnShowDev = (Button) findViewById(R.id.btnDevByTime);
         Button btnShowTra = (Button) findViewById(R.id.btnTraByCou);
-        newtext.append("The biggest data traffic from " + selectedCountries.get(getMaxValue()) + " and of " + String.valueOf(dummyData.get(getMaxValue())) + " MB");
+        newtext.append("The biggest data traffic from " + selectedCountries.get(getMaxValue(dummyData)) + " and of " + String.valueOf(dummyData.get(getMaxValue(dummyData))) + " MB");
+        TextView txt_datatime = (TextView) findViewById(R.id.txt_databytime);
+
+
+
+       txt_datatime.append("the biggest data used is in " + String.valueOf(time_data.get(getMaxData_bytime(Data_Time))) + " period and its number is  " + String.valueOf(Data_Time.get(getMaxData_bytime(Data_Time)).getVal()) + " MB");
 
         btnShowDev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -126,12 +140,24 @@ public class SummeryActivity extends ActionBarActivity {
         return tmp_countries;
     }
 
-    public int getMaxValue(){
+    public int getMaxValue(ArrayList<Integer> s){
         int max = 0;
         int max_index = 0;
-        for(int i = 0; i < dummyData.size(); i++){
-            if(dummyData.get(i)>max) {
-                max = dummyData.get(i);
+        for(int i = 0; i < s.size(); i++){
+            if(s.get(i)>max) {
+                max = s.get(i);
+                max_index = i;
+            }
+        }
+        return max_index;
+    }
+
+    public int getMaxData_bytime(ArrayList<Entry> s){
+        int max = 0;
+        int max_index = 0;
+        for(int i = 0; i < s.size(); i++){
+            if(s.get(i).getVal() > max) {
+                max = (int) s.get(i).getVal();
                 max_index = i;
             }
         }
@@ -153,6 +179,26 @@ public class SummeryActivity extends ActionBarActivity {
         }
         return temp;
     }
+
+    public ArrayList<Entry> DataTrafficTime() {
+        int min=300 , max=1000;
+        ArrayList<Entry> temp = new ArrayList<Entry>();
+
+        Random r = new Random();
+        for (int i=0; i<25; i++) {
+            temp.add(new Entry(r.nextInt(max - min + 1) + min, i));
+            int a = i+1;
+            if (a<25)
+            time_data.add(i+":00---"+ a +":00");
+            else if (a==25)
+                time_data.add(i+":00---"+"0:00");
+        }
+        return temp;
+    }
+
+
+
+
 
 
     @Override

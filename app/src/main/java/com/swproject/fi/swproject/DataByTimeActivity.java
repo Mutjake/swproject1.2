@@ -3,105 +3,113 @@ package com.swproject.fi.swproject;
 import android.graphics.Color;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.DataSet;
+import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.utils.ColorTemplate;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
 
 public class DataByTimeActivity extends ActionBarActivity {
 
-    private LineChart mChart;
-    private RelativeLayout datatime;
-    private DataSet dataSet;
+
+
+    public static Entry max, min;
+    ArrayList<Entry> data = new ArrayList<Entry>();
+    ArrayList<String> xVals = new ArrayList<String>();
+    private ArrayList<String> labels;
+    private ArrayList<BarEntry> entries;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_by_time);
-        mChart = new LineChart(this.getApplicationContext());
-        datatime = (RelativeLayout) findViewById(R.id.databytime_frame);
-        datatime.addView(mChart);
 
-        //customize line chart
-        mChart.setDescription("");
-        mChart.setNoDataTextDescription("No data for the moment");
+        Log.v("Junjie", "linechart");
+        //generating fake data
 
-        //enable value highlighting
-        mChart.setHighlightEnabled(true);
+        Calendar c = Calendar.getInstance();
+        int currentHour = c.get(Calendar.HOUR_OF_DAY);
 
-
-        //enable touch gestures
-        mChart.setTouchEnabled(true);
-
-        // enable scaling and dragging
-        mChart.setDragEnabled(true);
-        mChart.setScaleEnabled(true);
-        mChart.setDrawGridBackground(false);
-
-        //enable pinch zoom to avoid scaling z and y axis separately
-        mChart.setPinchZoom(true);
-
-        mChart.setBackgroundColor(Color.LTGRAY);
-
-        //now we work on data
-        LineData data = new LineData();
-        data.setValueTextColor(Color.WHITE);
-
-
-        //add data to chart
-        mChart.setData(data);
-
-
-        //get legend object
-        Legend l = mChart.getLegend();
-
-        //customize legend
-        l.setForm(Legend.LegendForm.LINE);
-        l.setTextColor(Color.WHITE);
-        l.setFormSize(500);
-
-        XAxis x1 = mChart.getXAxis();
-        x1.setTextColor(Color.WHITE);
-        x1.setDrawGridLines(false);
-        x1.setAvoidFirstLastClipping(true);
-
-        YAxis y1 = mChart.getAxisLeft();
-        y1.setTextColor(Color.WHITE);
-        y1.setAxisMaxValue(450f);
-        y1.setDrawGridLines(true);
-
-
-        YAxis y2 = mChart.getAxisRight();
-        y2.setEnabled(true);
-
-
-
-
-    }
-
-    private void addEntry(){
-        LineData data = mChart.getLineData();
-
-        if (data != null){
-            LineDataSet set = data.getDataSetByIndex(0);
-
-            if(set != null){
-
+        for (int i=0; i<10; i++)
+        {
+            int hour = currentHour - i;
+            boolean isPreviousDay = false;
+            if (hour == 0)
+            {
+                isPreviousDay = true;
             }
+            if (hour < 0)
+            {
+                hour = 24 - (i - currentHour);
+            }
+
+
+
         }
 
+
+
+
+
+        LineChart chart = new LineChart(this.getApplicationContext());
+        setContentView(chart);
+
+        // generating data
+
+        data = SummeryActivity.Data_Time;
+        xVals = SummeryActivity.time_data;
+
+        LineDataSet lineDataset = new LineDataSet(data, "Description");
+
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(lineDataset);
+
+        LineData lineData = new LineData(xVals, dataSets);
+        chart.setDescription("Data usage in different time (MigaByte)");
+        chart.setData(lineData);
     }
+
+
+
+
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+
+
+
+
+
 
 
     @Override
