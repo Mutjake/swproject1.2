@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2015 University of Oulu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at 
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ */
+
 package com.swproject.fi.swproject;
 
 import android.os.Bundle;
@@ -22,6 +38,7 @@ import java.util.Random;
 
 /**
  * Created by dluu on 27.7.2015.
+ * The chart show number of devices connected to network by time
  */
 public class DevicesByTimeChartActivity extends ActionBarActivity
 {
@@ -37,6 +54,7 @@ public class DevicesByTimeChartActivity extends ActionBarActivity
         return r.nextInt(max - min + 1) + min;
     }
 
+	/** Generating fake data for the chart */
     private ArrayList<BarEntry> generateFakeData()
     {
         ArrayList<BarEntry> data = new ArrayList<BarEntry>();
@@ -90,36 +108,12 @@ public class DevicesByTimeChartActivity extends ActionBarActivity
             this.labels.add(tmp.get(10-i-1));
         }
 
-        /*BarChart chart = new BarChart(this.getApplicationContext());
+        BarChart chart = new BarChart(this.getApplicationContext());
 
         setContentView(chart);
 
         BarData data = new BarData(labels, dataset);
         chart.setData(data);
-        */
-        LineChart chart = new LineChart(this.getApplicationContext());
-        setContentView(chart);
-
-        // generating data
-
-        ArrayList<Entry> data = new ArrayList<Entry>();
-        ArrayList<String> xVals = new ArrayList<String>();
-        for (int i=1; i<20; i++)
-        {
-            data.add(new Entry(this.randomDeviceCount(1, 10), i));
-            xVals.add("Col " + String.valueOf(i));
-        }
-
-        LineDataSet lineDataset = new LineDataSet(data, "");
-
-
-        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
-        dataSets.add(lineDataset);
-
-        LineData lineData = new LineData(xVals, dataSets);
-        chart.setData(lineData);
-
-
 
     }
 }

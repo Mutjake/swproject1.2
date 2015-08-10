@@ -1,18 +1,38 @@
+/*
+ * Copyright (C) 2015 University of Oulu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at 
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ */
+
 package com.swproject.fi.swproject;
 
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.GridView;
@@ -20,12 +40,16 @@ import android.widget.GridView;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The main screen that displays the connected devices
+ */
 
 public class MainActivity extends ActionBarActivity implements View.OnClickListener{
     private ImageViewAdapter adapter;
     private int deviceIndex = -1;
     public static List<Device> deviceList;
-
+	
+	/** Initiation function to create the screen */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +94,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
         return super.onOptionsItemSelected(item);
     }
-
+	
+	/** Simulate a random device connected to the network */
     private void addItem(String name, String ip, String mac){
         deviceList.add(new Device(R.drawable.desktop, name, ip, mac));
         adapter.notifyDataSetChanged();
@@ -78,6 +103,7 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         onNotify();
     }
 
+	/** Notify action when a new device connect to network */
     private void onNotify(){
         SharedPreferences prefs = this.getSharedPreferences("com.swproject.fi.swproject", Context.MODE_PRIVATE);
         int notificationId = prefs.getInt("notificationId",0)+1;
@@ -115,7 +141,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         nm.notify(notificationId, noti.build());
 
     }
-
+	
+	/** Simulate the action that 1 device leave network */
     private void removeItem(){
         if (deviceList.size() != 0){
             int last = deviceList.size() - 1;
@@ -127,7 +154,6 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
 
     private void showDeviceCountChart()
     {
-        Log.v("thangld", "begin chart");
         Intent activity = new Intent(getApplicationContext(), DevicesByTimeChartActivity.class);
         startActivity(activity);
     }
@@ -137,7 +163,8 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
         super.onResume();
         adapter.notifyDataSetChanged();
     }
-
+	
+	/** When the user click a device */
     private AdapterView.OnItemClickListener deviceClickListener = new AdapterView.OnItemClickListener() {
         @Override
         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -154,9 +181,9 @@ public class MainActivity extends ActionBarActivity implements View.OnClickListe
             startActivity(activity);
         }
     };
-
+	
+	/** When the user click a button */
     public void onClick(View view) {
-        Log.v("thangld", String.valueOf(view.getId()));
         switch (view.getId()){
             case R.id.btnAdd:
                 int index = deviceList.size() + 1;

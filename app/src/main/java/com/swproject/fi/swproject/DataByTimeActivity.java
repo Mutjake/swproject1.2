@@ -1,3 +1,19 @@
+/*
+ * Copyright (C) 2015 University of Oulu
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at 
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software 
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and 
+ * limitations under the License.
+ */
+
 package com.swproject.fi.swproject;
 
 import android.graphics.Color;
@@ -29,7 +45,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
 
-
+/**
+ * The chart showing data volume by time
+ */
 public class DataByTimeActivity extends ActionBarActivity {
 
 
@@ -47,7 +65,6 @@ public class DataByTimeActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_data_by_time);
 
-        Log.v("Junjie", "linechart");
         //generating fake data
 
         Calendar c = Calendar.getInstance();
@@ -69,11 +86,7 @@ public class DataByTimeActivity extends ActionBarActivity {
 
 
         }
-
-
-
-
-
+		
         LineChart chart = new LineChart(this.getApplicationContext());
         setContentView(chart);
 
@@ -93,24 +106,11 @@ public class DataByTimeActivity extends ActionBarActivity {
         chart.setData(lineData);
     }
 
-
-
-
-
-
-
     @Override
     protected void onResume() {
         super.onResume();
 
     }
-
-
-
-
-
-
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
