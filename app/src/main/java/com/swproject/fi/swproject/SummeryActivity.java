@@ -45,8 +45,11 @@ public class SummeryActivity extends ActionBarActivity {
     public static ArrayList<Entry> Data_Time = new ArrayList<Entry>();
     public static ArrayList<String> time_data = new ArrayList<String>();
 
+    public static ArrayList<Entry>  Devices_number = new ArrayList<Entry>();
+    public static ArrayList<String> Time_data = new ArrayList<String>();
+
+
     public static ArrayList<String> data = new ArrayList<>();
-    public static ArrayList<String> selecteddevices = new ArrayList<>();
 
     //public DataByTimeActivity data_by_time = new DataByTimeActivity();
 
@@ -79,16 +82,28 @@ public class SummeryActivity extends ActionBarActivity {
         selectedCountries = getCountries();
         dummyData = dummyDataTraffic();
         Data_Time = DataTrafficTime();
+        Devices_number = DevicesByTime();
+
+        TextView Num_text = (TextView) findViewById(R.id.textView3);
+        ArrayList<Integer> a = getBusyPeriod(Devices_number);
+        Num_text.append("The busy periods (with 16 or more than 16 devices connected) are: ");
+        for (int i = 0; i< a.size(); i++)
+        {
+            int time = a.get(i);
+            int Time = time + 1;
+            Num_text.append(time + ":00" + " to " + Time + ":00 ; " );
+        }
+        Num_text.append("You probably need to pay attention if any other unreliable devices break into the Network. ");
+        Num_text.append("the busiest period is in " + String.valueOf(Time_data.get(getMaxData_bytime(Devices_number))) + " and the number of devices connected to the network is " + String.valueOf(Devices_number.get(getMaxData_bytime(Devices_number)).getVal()) + " ");
 
         TextView newtext = (TextView) findViewById(R.id.textView4);
         Button btnShowDev = (Button) findViewById(R.id.btnDevByTime);
         Button btnShowTra = (Button) findViewById(R.id.btnTraByCou);
-        newtext.append("The biggest data traffic from " + selectedCountries.get(getMaxValue(dummyData)) + " and of " + String.valueOf(dummyData.get(getMaxValue(dummyData))) + " MB");
+        newtext.append("In recent weeks, in " + selectedCountries.get(getMaxValue(dummyData)) + " you spent the longest time to browse Internet, and the data used is " + String.valueOf(dummyData.get(getMaxValue(dummyData))) + " MB");
         TextView txt_datatime = (TextView) findViewById(R.id.txt_databytime);
 
 
-
-       txt_datatime.append("the biggest data used is in " + String.valueOf(time_data.get(getMaxData_bytime(Data_Time))) + " period and its number is  " + String.valueOf(Data_Time.get(getMaxData_bytime(Data_Time)).getVal()) + " MB");
+        txt_datatime.append("During a day, in " + String.valueOf(time_data.get(getMaxData_bytime(Data_Time))) + " period you used the most data,  and its number is  " + String.valueOf(Data_Time.get(getMaxData_bytime(Data_Time)).getVal()) + " MB");
 
         btnShowDev.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -182,6 +197,20 @@ public class SummeryActivity extends ActionBarActivity {
         return max_index;
     }
 
+
+    public ArrayList<Integer> getBusyPeriod(ArrayList<Entry> s){
+        int busy = 15;
+        ArrayList<Integer> busy_index = new ArrayList<>();
+        for(int i = 0; i < s.size(); i++){
+            if(s.get(i).getVal() >= busy) {
+                busy_index.add(i);
+            }
+        }
+        return busy_index;
+    }
+
+
+
     public Calendar getCalendar(){
         Calendar c = Calendar.getInstance();
         return c;
@@ -207,9 +236,26 @@ public class SummeryActivity extends ActionBarActivity {
             temp.add(new Entry(r.nextInt(max - min + 1) + min, i));
             int a = i+1;
             if (a<25)
-            time_data.add(i+":00---"+ a +":00");
+                time_data.add(i+":00---"+ a +":00");
             else if (a==25)
                 time_data.add(i+":00---"+"0:00");
+        }
+        return temp;
+    }
+
+
+    public ArrayList<Entry> DevicesByTime() {
+        int min=3 , max=20;
+        ArrayList<Entry> temp = new ArrayList<Entry>();
+
+        Random r = new Random();
+        for (int i=0; i<25; i++) {
+            temp.add(new Entry(r.nextInt(max - min + 1) + min, i));
+            int a = i+1;
+            if (a<25)
+                Time_data.add(i+":00---"+ a +":00");
+            else if (a==25)
+                Time_data.add(i+":00---"+"0:00");
         }
         return temp;
     }

@@ -15,7 +15,7 @@
         android:background="@drawable/button_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Device usage in different time"
+        android:text="See details"
         android:id="@+id/btnDevByTime"
         android:layout_below="@+id/textView3"
         android:layout_alignParentEnd="true" />
@@ -30,10 +30,11 @@
         android:background="@drawable/button_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="See detail"
+        android:text="See details"
         android:id="@+id/btnTraByCou"
+        android:layout_marginTop="45dp"
         android:layout_below="@+id/textView4"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignStart="@+id/btnDevByTime" />
 
     <TextView
         android:text="@string/data_by_time"
@@ -47,9 +48,10 @@
         android:background="@drawable/button_style"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="See detail"
+        android:text="See details"
         android:id="@+id/btn_databytime"
-        android:layout_centerVertical="true"
-        android:layout_alignStart="@+id/btnTraByCou" />
+        android:layout_marginBottom="97dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>

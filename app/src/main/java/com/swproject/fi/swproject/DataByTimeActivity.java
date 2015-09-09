@@ -93,7 +93,7 @@ public class DataByTimeActivity extends ActionBarActivity {
         // generating data
 
         data = SummeryActivity.Data_Time;
-        xVals = SummeryActivity.time_data;
+        xVals = SummeryActivity.Time_data;
 
         LineDataSet lineDataset = new LineDataSet(data, "Description");
 
@@ -102,7 +102,7 @@ public class DataByTimeActivity extends ActionBarActivity {
         dataSets.add(lineDataset);
 
         LineData lineData = new LineData(xVals, dataSets);
-        chart.setDescription("Data usage in different time (MigaByte)");
+        chart.setDescription("Data usage in different period of time (Megabyte)");
         chart.setData(lineData);
     }
 

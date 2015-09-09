@@ -19,6 +19,8 @@ package com.swproject.fi.swproject;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -42,78 +44,66 @@ import java.util.Random;
  */
 public class DevicesByTimeChartActivity extends ActionBarActivity
 {
-    protected BarChart mChart;
-    private TextView tvX, tvY;
-
+    public static Entry max, min;
+    ArrayList<Entry> data = new ArrayList<Entry>();
+    ArrayList<String> xVals = new ArrayList<String>();
     private ArrayList<String> labels;
     private ArrayList<BarEntry> entries;
 
-    private int randomDeviceCount(int min, int max)
-    {
-        Random r = new Random();
-        return r.nextInt(max - min + 1) + min;
-    }
 
-	/** Generating fake data for the chart */
-    private ArrayList<BarEntry> generateFakeData()
-    {
-        ArrayList<BarEntry> data = new ArrayList<BarEntry>();
-        for (int i=0; i<10; i++)
-        {
-            data.add(new BarEntry(this.randomDeviceCount(3, 9), i));
-        }
 
-        return data;
-    }
-
-    protected void onCreate(Bundle savedInstanceState)
-    {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Log.v("thangld", "chart");
+        setContentView(R.layout.activity_data_by_time);
+
         //generating fake data
-        this.entries = this.generateFakeData();
-        BarDataSet dataset = new BarDataSet(this.entries, "# of Devices");
 
-        //generate labels
-        this.labels = new ArrayList<String>();
-        ArrayList<String> tmp = new ArrayList<String>();
-        Calendar c = Calendar.getInstance();
-        int currentHour = c.get(Calendar.HOUR_OF_DAY);
 
-        for (int i=0; i<10; i++)
-        {
-            int hour = currentHour - i;
-            boolean isPreviousDay = false;
-            if (hour == 0)
-            {
-                isPreviousDay = true;
-            }
-            if (hour < 0)
-            {
-                hour = 24 - (i - currentHour);
-            }
-
-            if (!isPreviousDay)
-                tmp.add(String.valueOf(hour));
-            else
-            {
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd");
-                tmp.add(dateFormat.format(c.getTime()));
-            }
-
-        }
-        // reverse the array list
-        for (int i=0; i<10; i++)
-        {
-            this.labels.add(tmp.get(10-i-1));
-        }
-
-        BarChart chart = new BarChart(this.getApplicationContext());
-
+        LineChart chart = new LineChart(this.getApplicationContext());
         setContentView(chart);
 
-        BarData data = new BarData(labels, dataset);
-        chart.setData(data);
+        // generating data
 
+        data = SummeryActivity.Devices_number;
+        xVals = SummeryActivity.time_data;
+
+        LineDataSet lineDataset = new LineDataSet(data, "Description");
+
+
+        ArrayList<LineDataSet> dataSets = new ArrayList<LineDataSet>();
+        dataSets.add(lineDataset);
+
+        LineData lineData = new LineData(xVals, dataSets);
+        chart.setDescription("Number of devices in different period of time");
+        chart.setData(lineData);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_data_by_time, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
